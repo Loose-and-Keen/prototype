@@ -40,7 +40,7 @@ except Exception as e:
     st.stop()
 
 # --- Streamlit アプリの UI ---
-st.title("🤖 AI-Ken プロトタイプ (by トス)")
+st.title("🤖 AI-Ken プロトタイプ")
 st.caption("powered by Gemini & Streamlit")
 
 # --- 会話履歴を Streamlit のセッション状態で管理 ---
@@ -49,7 +49,7 @@ if "chat" not in st.session_state:
         # 初回アクセス時にチャットセッションを開始
         st.session_state.chat = model.start_chat(history=[])
         # 最初の挨拶を履歴に追加（表示用）
-        st.session_state.messages = [{"role": "assistant", "content": "よっ、Ken！何でも聞いてくれよな！👍"}]
+        st.session_state.messages = [{"role": "assistant", "content": ”最近どう〜？"}]
     except Exception as e:
         st.error(f"チャットセッションの開始でエラー: {e}")
         st.stop()
@@ -61,7 +61,7 @@ for message in st.session_state.messages:
 
 # --- ユーザーからの入力を受け付けるチャット入力欄 ---
 # st.chat_input は下部に固定される入力欄
-if prompt := st.chat_input("Ken、メッセージを入力してくれ！"):
+if prompt := st.chat_input("なんでも話していいよー"):
     # ユーザーの入力を履歴に追加して表示
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
