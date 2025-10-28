@@ -40,7 +40,7 @@ except Exception as e:
     st.stop()
 
 # --- Streamlit アプリの UI ---
-st.title("🤖 AI-Ken プロトタイプ")
+st.title("🤖 AI-Ken-Test")
 st.caption("powered by Gemini & Streamlit")
 
 # --- 会話履歴を Streamlit のセッション状態で管理 ---
