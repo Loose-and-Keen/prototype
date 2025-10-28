@@ -49,7 +49,7 @@ if "chat" not in st.session_state:
         # 初回アクセス時にチャットセッションを開始
         st.session_state.chat = model.start_chat(history=[])
         # 最初の挨拶を履歴に追加（表示用）
-        st.session_state.messages = [{"role": "assistant", "content": ”最近どう〜？"}]
+        st.session_state.messages = [{"role": "assistant", "content": "最近どう〜？"}]
     except Exception as e:
         st.error(f"チャットセッションの開始でエラー: {e}")
         st.stop()
