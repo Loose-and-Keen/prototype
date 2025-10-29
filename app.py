@@ -43,7 +43,7 @@ except Exception as e:
     st.stop()
 
 # --- Streamlit アプリの UI ---
-st.title("🤖 AI-Ken-Test")
+st.title("🤖 Ken's Prototype")
 st.caption("powered by Gemini & Streamlit")
 
 # --- MVP用 ユーザーID ---
@@ -51,7 +51,7 @@ USER_ID = 'ken' # 固定
 
 # --- サイドバーで目標を設定できるようにする ---
 st.sidebar.header("🎯 Kenの目標設定 (MVP)")
-st.sidebar.caption("スマートホーム関連の目標を選ぶと？")
+st.sidebar.caption("スマートホーム関連")
 
 # 現在の目標をDBから取得
 current_goals = db_utils.get_user_goals(USER_ID)
@@ -84,7 +84,7 @@ if "chat" not in st.session_state:
         # 初回アクセス時にチャットセッションを開始
         st.session_state.chat = model.start_chat(history=[])
         # 最初の挨拶を履歴に追加（表示用）
-        st.session_state.messages = [{"role": "assistant", "content": "最近どう〜？"}]
+        st.session_state.messages = [{"role": "assistant", "content": "なにか困ったことがある？"}]
     except Exception as e:
         st.error(f"チャットセッションの開始でエラー: {e}")
         st.stop()
