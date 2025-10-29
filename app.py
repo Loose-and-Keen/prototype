@@ -111,11 +111,11 @@ if prompt := st.chat_input("なんでも話していいよー"):
             # DBから最新の目標を取得してWBSを生成！
             user_current_goals = db_utils.get_user_goals(USER_ID)
             response_text = generate_smarthome_wbs_v2(user_current_goals)
-        else:    
-            response = st.session_state.chat.send_message(prompt)
-            # AIの応答を履歴に追加して表示
-            with st.chat_message("assistant"):
-                st.markdown(response.text)
-            st.session_state.messages.append({"role": "assistant", "content": response.text})
+    
+        response = st.session_state.chat.send_message(prompt)
+        # AIの応答を履歴に追加して表示
+        with st.chat_message("assistant"):
+            st.markdown(response.text)
+        st.session_state.messages.append({"role": "assistant", "content": response.text})
     except Exception as e:
         st.error(f"AIとの通信でエラーが発生しました: {e}")
