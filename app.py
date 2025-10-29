@@ -84,7 +84,7 @@ if "chat" not in st.session_state:
         # 初回アクセス時にチャットセッションを開始
         st.session_state.chat = model.start_chat(history=[])
         # 最初の挨拶を履歴に追加（表示用）
-        st.session_state.messages = [{"role": "assistant", "content": "なにか困ったことがある？"}]
+        st.session_state.messages = [{"role": "assistant", "content": "なにか困ったことある？"}]
     except Exception as e:
         st.error(f"チャットセッションの開始でエラー: {e}")
         st.stop()
@@ -96,7 +96,7 @@ for message in st.session_state.messages:
 
 # --- ユーザーからの入力を受け付けるチャット入力欄 ---
 # st.chat_input は下部に固定される入力欄
-if prompt := st.chat_input("なんでも話していいよー"):
+if prompt := st.chat_input("なんでも話していいよ〜"):
     # ユーザーの入力を履歴に追加して表示
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
