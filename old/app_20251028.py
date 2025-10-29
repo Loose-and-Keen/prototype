@@ -1,8 +1,6 @@
 import streamlit as st
 import google.generativeai as genai
 import os
-import db_utils 
-from smart_home_logic import generate_smarthome_wbs_v2
 
 # --- APIキー設定 ---
 api_key = os.getenv("GOOGLE_API_KEY")
@@ -46,38 +44,6 @@ except Exception as e:
 st.title("🤖 AI-Ken-Test")
 st.caption("powered by Gemini & Streamlit")
 
-# --- MVP用 ユーザーID ---
-USER_ID = 'ken' # 固定
-
-# --- サイドバーで目標を設定できるようにする ---
-st.sidebar.header("🎯 Kenの目標設定 (MVP)")
-st.sidebar.caption("スマートホーム関連の目標を選ぶと？")
-
-# 現在の目標をDBから取得
-current_goals = db_utils.get_user_goals(USER_ID)
-
-# チェックボックスで目標を選択/解除
-goal_options = {
-    "basic_voice_control": "声で家電操作 (基本)",
-    "media_voice_control": "声でYouTubeとか再生",
-    "curtain_automation": "カーテン自動化"
-}
-
-# チェックボックスの状態を管理
-new_goals = []
-for goal_key, goal_label in goal_options.items():
-    # DBに保存されてる目標はデフォルトでチェックを入れる
-    is_checked = st.sidebar.checkbox(goal_label, value=(goal_key in current_goals))
-    if is_checked:
-        new_goals.append(goal_key)
-        # もしDBになければ追加
-        if goal_key not in current_goals:
-            db_utils.add_user_goal(USER_ID, goal_key)
-    else:
-        # もしDBにあれば削除
-        if goal_key in current_goals:
-            db_utils.remove_user_goal(USER_ID, goal_key)
-
 # --- 会話履歴を Streamlit のセッション状態で管理 ---
 if "chat" not in st.session_state:
     try:
@@ -102,20 +68,12 @@ if prompt := st.chat_input("なんでも話していいよー"):
     with st.chat_message("user"):
         st.markdown(prompt)
 
-    response_text = ""
-
     # AIに応答を生成させて表示
-    # スマートホーム関連のキーワードを検知したらWBS生成
     try:
-        if "スマートホーム" in prompt or "家電" in prompt or "声で操作" in prompt or "WBS" in prompt:
-            # DBから最新の目標を取得してWBSを生成！
-            user_current_goals = db_utils.get_user_goals(USER_ID)
-            response_text = generate_smarthome_wbs_v2(user_current_goals)
-        else:    
-            response = st.session_state.chat.send_message(prompt)
-            # AIの応答を履歴に追加して表示
-            with st.chat_message("assistant"):
-                st.markdown(response.text)
-            st.session_state.messages.append({"role": "assistant", "content": response.text})
+        response = st.session_state.chat.send_message(prompt)
+        # AIの応答を履歴に追加して表示
+        with st.chat_message("assistant"):
+            st.markdown(response.text)
+        st.session_state.messages.append({"role": "assistant", "content": response.text})
     except Exception as e:
         st.error(f"AIとの通信でエラーが発生しました: {e}")
