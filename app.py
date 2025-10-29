@@ -1,7 +1,7 @@
 import streamlit as st
 import google.generativeai as genai
 import os
-import db_utils 
+import db_utils
 from smart_home_logic import generate_smarthome_wbs_v2
 
 # --- APIキー設定 ---
