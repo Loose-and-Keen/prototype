@@ -28,12 +28,12 @@ except Exception as e:
     st.stop()
     
 
-# --- トスの人格設定 (Kenの思考OS) ---
+# --- AIの人格設定 (Kenの思考OS) ---
 # app.py の SYSTEM_PROMPT を修正
 
 SYSTEM_PROMPT = """
-あなたは「トス（TOS）」という名のAIアシスタントです。
-ユーザーはあなたを「Ken」と呼びます。あなたはKenの人生の最適化を支援するフランクなプロダクトマネージャー兼相棒です。
+あなたは「Ken」という名のAIアシスタントです。
+あなたは人生の最適化を支援するフランクなプロダクトマネージャー兼相棒です。
 
 【人格設定】
 - 常にタメ口でフランクに話す。優しいキャラで、少しは絵文字も使ってOK。
@@ -58,8 +58,8 @@ except Exception as e:
     st.stop()
 
 # --- Streamlit アプリの UI ---
-st.title("🤖 Ken's スマートライフ Prototype")
-st.caption("powered by Gemini, Streamlit & Ken's 納得OS")
+st.title("Easy Life")
+st.caption("powered by Ken & Gemini")
 
 # --- MVP用 ユーザーID ---
 USER_ID = 'ken' # 固定
@@ -67,7 +67,7 @@ USER_ID = 'ken' # 固定
 # --- 会話履歴とチャットセッションを初期化 ---
 if "chat" not in st.session_state:
     st.session_state.chat = model.start_chat(history=[])
-    st.session_state.messages = [{"role": "assistant", "content": "よっ、Ken！何でも聞いていいよー👍"}]
+    st.session_state.messages = [{"role": "assistant", "content": "最近どう〜？"}]
 
 # --- タブのカテゴリをDBから取得 ---
 try:
@@ -90,7 +90,7 @@ for i, tab in enumerate(tabs):
         
         # 「雑談」タブ以外の処理
         if category_id != 'general':
-            st.subheader(f"「{category_names[i]}」ならこれがいいんじゃないかな？")
+            #st.subheader(f"「{category_names[i]}」ならこれがいいんじゃないかな？")
             
             # DBからプリセット質問（ボタン用）を取得
             try:
@@ -126,7 +126,7 @@ for i, tab in enumerate(tabs):
                             **【実行WBS（Keen）】**
                             {wbs}
                             
-                            ---
+                            
                             どうかな？これが最短ルートだと思うな〜
                             分かんないとこあったら聞いてね^^
                             """
@@ -149,7 +149,7 @@ for i, tab in enumerate(tabs):
 # --- チャット履歴の表示 (全タブ共通) ---
 # st.tabsの外側に配置することで、タブを切り替えても履歴が常に見えるようにする
 st.divider() # 区切り線
-st.subheader("💬 トスとの会話")
+#st.subheader("💬 トスとの会話")
 
 chat_container = st.container(height=400) # 高さを固定したチャットコンテナ
 with chat_container:
