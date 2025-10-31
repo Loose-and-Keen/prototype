@@ -266,3 +266,55 @@ def get_knowledge_by_id(knowledge_id):
 # データベースがなければ自動で作る
 # ---
 init_db()
+
+# db_utils.py の一番下に追加
+
+def get_user_goals_by_category(user_id, category_id):
+    """指定されたユーザー/カテゴリの目標リストとステータスを取得"""
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+    # T_User_Goals から goal_key と status を取得
+    cursor.execute("SELECT goal_key, status FROM T_User_Goals WHERE user_id = ? AND category_id = ?", (user_id, category_id))
+    goals = cursor.fetchall() # [(goal_key, status), ...]
+    conn.close()
+    
+    # --- MVP用：もしT_User_Goalsにまだ目標がなかったら、M_Knowledge_Baseから作ってあげる ---
+    if not goals:
+        # M_Knowledge_Base から goal_key (preset_questionで代用) を取得
+        cursor = sqlite3.connect(DB_NAME).cursor()
+        cursor.execute("SELECT preset_question FROM M_Knowledge_Base WHERE category_id = ?", (category_id,))
+        preset_goals = cursor.fetchall()
+        
+        new_goals_to_insert = []
+        for (question,) in preset_goals:
+            # T_User_Goals に 'not_started' で追加
+            new_goals_to_insert.append((user_id, category_id, question, 'not_started'))
+        
+        if new_goals_to_insert:
+            conn = sqlite3.connect(DB_NAME)
+            cursor = conn.cursor()
+            try:
+                cursor.executemany("INSERT INTO T_User_Goals (user_id, category_id, goal_key, status) VALUES (?, ?, ?, ?)", 
+                                   new_goals_to_insert)
+                conn.commit()
+            except sqlite3.IntegrityError:
+                pass # 念のため
+            finally:
+                conn.close()
+        
+        # もう一度DBから取得
+        conn = sqlite3.connect(DB_NAME)
+        cursor = conn.cursor()
+        cursor.execute("SELECT goal_key, status FROM T_User_Goals WHERE user_id = ? AND category_id = ?", (user_id, category_id))
+        goals = cursor.fetchall()
+        conn.close()
+        
+    return goals
+
+def update_user_goal_status(user_id, goal_key, status):
+    """ユーザーの目標ステータスを更新"""
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+    cursor.execute("UPDATE T_User_Goals SET status = ? WHERE user_id = ? AND goal_key = ?", (status, user_id, goal_key))
+    conn.commit()
+    conn.close()

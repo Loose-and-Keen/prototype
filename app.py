@@ -67,7 +67,7 @@ USER_ID = 'ken' # 固定
 # --- 会話履歴とチャットセッションを初期化 ---
 if "chat" not in st.session_state:
     st.session_state.chat = model.start_chat(history=[])
-    st.session_state.messages = [{"role": "assistant", "content": "よっ、Ken！何でも聞いてくれよな！👍"}]
+    st.session_state.messages = [{"role": "assistant", "content": "よっ、Ken！何でも聞いていいよー👍"}]
 
 # --- タブのカテゴリをDBから取得 ---
 try:
@@ -90,14 +90,14 @@ for i, tab in enumerate(tabs):
         
         # 「雑談」タブ以外の処理
         if category_id != 'general':
-            st.subheader(f"「{category_names[i]}」の最短ルート（型）")
+            st.subheader(f"「{category_names[i]}」ならこれがいいんじゃないかな？")
             
             # DBからプリセット質問（ボタン用）を取得
             try:
                 preset_questions = db_utils.get_preset_questions(category_id)
                 
                 if not preset_questions:
-                    st.write("（このカテゴリの「型」はまだ準備中だぜ！）")
+                    st.write("（このカテゴリの「型」はまだ準備中〜）")
 
                 # プリセット質問をボタンとして表示
                 for question, knowledge_id in preset_questions:
@@ -113,7 +113,7 @@ for i, tab in enumerate(tabs):
                             title, why, failure, wbs = knowledge
                             # 「経験値」を元にAI-Kenの回答をフォーマット
                             response_text = f"""
-                            よっしゃ、その件だな！
+                            お、それなら少し知ってるかも？
                             
                             **【Kenの最短ルート】: {title}**
                             
@@ -127,11 +127,11 @@ for i, tab in enumerate(tabs):
                             {wbs}
                             
                             ---
-                            どうだ？これが俺の経験から導き出した最短ルートだぜ！
-                            分かんないとこあったら、このままチャットで聞いてくれ！
+                            どうかな？これが最短ルートだと思うな〜
+                            分かんないとこあったら聞いてね^^
                             """
                         else:
-                            response_text = "おっと、その「型」のデータが見つからなかったわ…ごめんな！"
+                            response_text = "おっと、その「型」のデータが見つからなかったわ…ごめんごめん！"
 
                         # 3. AI-Kenの回答（DBから）を履歴に追加・表示
                         st.session_state.messages.append({"role": "assistant", "content": response_text})
