@@ -26,6 +26,7 @@ try:
 except Exception as e:
     st.error(f"APIキーの設定でエラーが発生しました: {e}")
     st.stop()
+    
 
 # --- トスの人格設定 (Kenの思考OS) ---
 SYSTEM_PROMPT = """
