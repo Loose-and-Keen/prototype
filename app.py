@@ -30,7 +30,7 @@ except Exception as e:
 # MVPではどっちも'ken'だけど、役割を分離する！
 
 # 1. ログインしてる人
-LOGGED_IN_USER_ID = 'ken' 
+LOGGED_IN_USER_ID = 'sleep' 
 # 2. 今から話すAIの「型」を作った人（投稿ユーザ）
 # 将来的にはタブごとに変わるけど、今は全部Ken
 CHAT_AI_CREATOR_ID = 'ken' 
@@ -71,8 +71,8 @@ except Exception as e:
     st.stop()
 
 # --- Streamlit アプリの UI ---
-st.title(f"🤖 {LOGGED_IN_USER_NAME}のスマートライフ Prototype") # ログインユーザー名を表示
-st.caption("powered by Gemini, Streamlit & Ken's 納得OS (RAG)")
+st.title(f"🤖Protos Prototype") # ログインユーザー名を表示
+st.caption("powered by Gemini, Streamlit & Ken")
 
 # --- 会話履歴とチャットセッションを初期化 ---
 if "chat" not in st.session_state:
