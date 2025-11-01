@@ -5,14 +5,19 @@ import csv # CSVファイルを読み込むための最強モジュール
 
 DB_NAME = "aiken_user_data.db" # 作成されるDBファイル名
 
-# --- CSVファイル名（「DBの元ネタ」）を定義 ---
-CSV_USERS = 'data_users.csv'
-CSV_CATEGORIES = 'data_categories.csv'
-CSV_KNOWLEDGE_BASE = 'data_knowledge_base.csv'
-CSV_KNOWLEDGE_DETAILS = 'data_knowledge_details.csv'
+# このスクリプト(db_utils.py)があるフォルダの「絶対パス」を取得
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# 全てのファイルパスを、この「絶対パス」基準で定義し直す！
+DB_NAME = os.path.join(BASE_DIR, "aiken_user_data.db") # DBファイル本体
+CSV_USERS = os.path.join(BASE_DIR, 'data_users.csv')
+CSV_CATEGORIES = os.path.join(BASE_DIR, 'data_categories.csv')
+CSV_KNOWLEDGE_BASE = os.path.join(BASE_DIR, 'data_knowledge_base.csv')
+CSV_KNOWLEDGE_DETAILS = os.path.join(BASE_DIR, 'data_knowledge_details.csv')
 
 def setup_database():
     """
+    
     DBファイルが存在しない場合（＝Streamlit Cloud起動時）に、
     CSVファイルからDBを爆速で自動構築する関数
     """
