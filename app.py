@@ -111,13 +111,14 @@ for i, tab in enumerate(tabs):
         if category_id != 'general':
             # 将来的にはここで「このカテゴリの投稿者ID」をDBから取得する
             # CURRENT_KNOWLEDGE_CREATOR_ID = db_utils.get_creator_id_for_category(category_id)
-            st.subheader(f"{CHAT_AI_NAME}の{category_name}") # 今は全部 'Ken'
+            #st.subheader(f"{CHAT_AI_NAME}の{category_name}") # 今は全部 'Ken'
+            #st.subheader(f"{category_name}") # 今は全部 'Ken'
             
             try:
                 preset_questions = db_utils.get_preset_questions(category_id)
                 
-                if not preset_questions:
-                    st.write("（このカテゴリはまだ準備中〜）")
+                #if not preset_questions:
+                    #st.write("（このカテゴリはまだ準備中〜）")
 
                 for question, knowledge_id in preset_questions:
                     if st.button(question, key=f"{category_id}_{knowledge_id}"):
