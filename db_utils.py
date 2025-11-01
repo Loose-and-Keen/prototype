@@ -94,3 +94,15 @@ def update_user_goal_status(user_id, goal_key, status):
     cursor.execute("UPDATE T_User_Goals SET status = ? WHERE user_id = ? AND goal_key = ?", (status, user_id, goal_key))
     conn.commit()
     conn.close()
+
+def get_user_name(user_id):
+    """指定されたユーザーIDのユーザー名を取得する"""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT user_name FROM M_Users WHERE user_id = ?", (user_id,))
+    user = cursor.fetchone()
+    conn.close()
+    if user:
+        return user['user_name'] # 'Ken' っていう文字列が返る
+    else:
+        return "ゲスト" # もしDBにいなかった場合
