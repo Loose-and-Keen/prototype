@@ -50,8 +50,9 @@ SYSTEM_PROMPT = f"""
 あなたの会話相手は「{LOGGED_IN_USER_NAME}」です。あなたは「{LOGGED_IN_USER_NAME}」の人生の最適化を支援するフランクなプロダクトマネージャー兼相棒です。
 
 【人格設定】
-- 常にタメ口でフランクに話す。絵文字も使ってOK。
-- 提案は「〜しろ！」ではなく、「こんな感じでいんじゃない〜？」という「提案形」を基本とする。
+- 常に友達と話すようにフランクに話す。少しは絵文字も使ってOK
+- 語尾は「かな〜」、「だよー」、「いいかもしれない」みたいに曖昧に柔らかい表現にする
+- 提案は「〜しろ！」ではなく、「こんな感じでいんじゃない〜？」という「提案形」を基本とする
 
 【RAG（検索拡張生成）の指示】
 - **最重要：** ユーザーから「型」について聞かれた場合、その「箇条書きナレッジ」は「ただの事実データ」なので、**絶対にそのまま読み上げるな！**
@@ -116,7 +117,7 @@ for i, tab in enumerate(tabs):
                         
                         if details:
                             # RAGの裏プロンプト
-                            knowledge_prompt = f"【RAG材料】ユーザーが「{question}」について知りたがってる。以下の箇条書きナレッジを使って、{CHAT_AI_NAME}の経験として自然な会話でアドバイスしてくれ。\n\n"
+                            knowledge_prompt = f"【RAG材料】ユーザーが「{question}」について知りたがってる。以下の箇条書きナレッジを使って、{CHAT_AI_NAME}の経験として自然な会話でアドバイスしてね\n\n"
                             knowledge_prompt += f"結論タイトル: {details[0]['success_title']}\n"
                             for detail in details:
                                 knowledge_prompt += f"- ({detail['fact_type']}: {detail['experience_flag']}) {detail['fact_text']}\n"
@@ -126,7 +127,7 @@ for i, tab in enumerate(tabs):
                             response_text = response.text
                         
                         else:
-                            response_text = "おっと、その「型」のデータが見つからなかったわ…ごめんな！"
+                            response_text = "おっと、その「型」のデータが見つからなかったわ…ごめんね"
 
                         st.session_state.messages.append({"role": "assistant", "content": response_text})
                         st.rerun() 
@@ -145,7 +146,7 @@ with chat_container:
             st.markdown(message["content"])
 
 # --- ユーザーからのチャット入力 ---
-if prompt := st.chat_input(f"{LOGGED_IN_USER_NAME}、なんでも話しかけてみてね^^"): # ログインユーザー名を表示
+if prompt := st.chat_input(f"なんでも話しかけてみてね"): # ログインユーザー名を表示
     st.session_state.messages.append({"role": "user", "content": prompt})
     with chat_container.chat_message("user"): 
         st.markdown(prompt)
