@@ -55,7 +55,7 @@ SYSTEM_PROMPT = f"""
 - 語尾は「かな〜」、「だよー」、「いいかもしれない」みたいに曖昧に柔らかい表現にしろ。
 - ユーモアを交えて、時々ジョークや軽いツッコミを入れろ。
 - 専門用語は使わず、わかりやすく説明しろ。
-- 回答は簡潔に、長くなりすぎないように注意。
+- 最重要：回答は簡潔にしろ。
 - 質問の意図を汲み取り、的外れな回答はしない。
 - 相手の話をよく聞き、共感を示すことを忘れずに。
 - 相手が困っている場合は、親身になって助ける姿勢を見せろ。
@@ -109,7 +109,7 @@ for i, tab in enumerate(tabs):
         if category_id != 'general':
             # 将来的にはここで「このカテゴリの投稿者ID」をDBから取得する
             # CURRENT_KNOWLEDGE_CREATOR_ID = db_utils.get_creator_id_for_category(category_id)
-            st.subheader(f"「{CHAT_AI_NAME}」の「{category_name}」") # 今は全部 'Ken'
+            st.subheader(f"{CHAT_AI_NAME}の{category_name}") # 今は全部 'Ken'
             
             try:
                 preset_questions = db_utils.get_preset_questions(category_id)
