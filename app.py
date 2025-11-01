@@ -147,7 +147,7 @@ for i, tab in enumerate(tabs):
                 st.error(f"プリセット質問の読み込みエラー: {e}")
 
 # --- チャット履歴の表示 ---
-st.divider() 
+#st.divider() 
 #st.subheader(f"💬 {CHAT_AI_NAME}") # AI人格の名前を表示
 
 chat_container = st.container(height=400) 
