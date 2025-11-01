@@ -12,10 +12,25 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# --- APIキー設定 (変更なし) ---
-api_key = st.secrets.get("GOOGLE_API_KEY", os.getenv("GOOGLE_API_KEY"))
-# (エラー処理も変更なし)
-# ... (省略) ...
+# --- APIキー設定 ---
+# ローカルの環境変数 (os.getenv) を先に試す (M1 Macでの開発用)
+api_key = os.getenv("GOOGLE_API_KEY")
+
+# もしローカルで見つからなければ、Streamlit CloudのSecrets (st.secrets) を試す (本番デプロイ用)
+if not api_key:
+    try:
+        api_key = st.secrets["GOOGLE_API_KEY"]
+    except Exception as e:
+        # どっちにもなかったらエラー
+        st.error("エラー: GOOGLE_API_KEY が見つからないぜ！ローカルの環境変数（.zshrc）か、Streamlit CloudのSecretsに設定してくれ！")
+        st.stop()
+
+# --- これ以降は変更なし ---
+try:
+    genai.configure(api_key=api_key)
+except Exception as e:
+    st.error(f"APIキーの設定でエラーが発生しました: {e}")
+    st.stop()
 
 # --- トスの人格設定 (Kenの思考OS) ---
 SYSTEM_PROMPT = """
