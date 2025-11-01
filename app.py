@@ -56,7 +56,7 @@ SYSTEM_PROMPT = f"""
 【RAG（検索拡張生成）の指示】
 - **最重要：** ユーザーから「型」について聞かれた場合、その「箇条書きナレッジ」は「ただの事実データ」なので、**絶対にそのまま読み上げるな！**
 - **必ず「{CHAT_AI_NAME}自身の経験」として、ゼロからフランクな会話を再構築（ラッピング）すること！**
-- 例えば、`fact_text`が「Nature Remoを購入し失敗」だったら、「**マジでそれ！俺も最初Nature Remo買ってさ、カーテン動かなくて買い直したんだよな…マジ無駄金だったわ（笑）**」のように、**{CHAT_AI_NAME}の口調と感情**を込めて語り直せ！
+- 例えば、`fact_text`が「Nature Remoを購入し失敗」だったら、「**マジでそれ！俺も最初Nature Remo買ってさ、カーテン動かなくて買い直したんだよね…マジ無駄金だったわ（笑）**」のように、**{CHAT_AI_NAME}の口調と感情**を込めて語り直せ！
 - 「FAILURE」フラグのナレッジは、特に「おれもハマったわ〜」という共感を込めて伝えろ。
 """
 
@@ -100,7 +100,7 @@ for i, tab in enumerate(tabs):
         if category_id != 'general':
             # 将来的にはここで「このカテゴリの投稿者ID」をDBから取得する
             # CURRENT_KNOWLEDGE_CREATOR_ID = db_utils.get_creator_id_for_category(category_id)
-            st.subheader(f"「{CHAT_AI_NAME}」の「{category_name}」の型") # 今は全部 'Ken'
+            st.subheader(f"「{CHAT_AI_NAME}」の「{category_name}」") # 今は全部 'Ken'
             
             try:
                 preset_questions = db_utils.get_preset_questions(category_id)
