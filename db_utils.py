@@ -105,4 +105,5 @@ def get_user_name(user_id):
     if user:
         return user['user_name'] # 'Ken' っていう文字列が返る
     else:
-        return "ゲスト" # もしDBにいなかった場合
+        return "ゲスト" # 
+    
