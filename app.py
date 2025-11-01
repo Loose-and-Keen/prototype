@@ -30,7 +30,7 @@ except Exception as e:
 # MVPではどっちも'ken'だけど、役割を分離する！
 
 # 1. ログインしてる人
-LOGGED_IN_USER_ID = 'sleep' 
+LOGGED_IN_USER_ID = 'yuki' 
 # 2. 今から話すAIの「型」を作った人（投稿ユーザ）
 CHAT_AI_CREATOR_ID = 'ken' 
 
