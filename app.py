@@ -37,8 +37,8 @@ CHAT_AI_CREATOR_ID = 'ken'
 
 # --- それぞれの名前をDBから取得 ---
 try:
-    LOGGED_IN_USER_NAME = db_utils.get_user_name(LOGGED_IN_USER_ID) # 'Ken'
-    CHAT_AI_NAME = db_utils.get_user_name(CHAT_AI_CREATOR_ID)       # これも 'Ken'
+    LOGGED_IN_USER_NAME = db_utils.get_user_name(LOGGED_IN_USER_ID) 
+    CHAT_AI_NAME = db_utils.get_user_name(CHAT_AI_CREATOR_ID)
 except Exception as e:
     st.error(f"ユーザー名の取得でDBエラー: {e}")
     LOGGED_IN_USER_NAME = "ゲスト"
