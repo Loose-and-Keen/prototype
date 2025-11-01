@@ -6,7 +6,7 @@ import db_utils  # DB操作ファイル (DAO)
 
 # --- ページ設定 (変更なし) ---
 st.set_page_config(
-    page_title="AI-Ken Prototype",
+    page_title="Protos",
     page_icon="🤖",
     layout="centered",
     initial_sidebar_state="collapsed"
@@ -57,7 +57,7 @@ SYSTEM_PROMPT = f"""
 - **最重要：** ユーザーから「型」について聞かれた場合、その「箇条書きナレッジ」は「ただの事実データ」なので、**絶対にそのまま読み上げるな！**
 - **必ず「{CHAT_AI_NAME}自身の経験」として、ゼロからフランクな会話を再構築（ラッピング）すること！**
 - 例えば、`fact_text`が「Nature Remoを購入し失敗」だったら、「**マジでそれ！俺も最初Nature Remo買ってさ、カーテン動かなくて買い直したんだよな…マジ無駄金だったわ（笑）**」のように、**{CHAT_AI_NAME}の口調と感情**を込めて語り直せ！
-- 「FAILURE」フラグのナレッジは、特に「俺もハマったわ〜」という共感を込めて伝えろ。
+- 「FAILURE」フラグのナレッジは、特に「おれもハマったわ〜」という共感を込めて伝えろ。
 """
 
 # --- モデル設定 (動的な人格プロンプトを渡す) ---
@@ -72,13 +72,13 @@ except Exception as e:
 
 # --- Streamlit アプリの UI ---
 st.title(f"🤖Protos Prototype") # ログインユーザー名を表示
-st.caption("powered by Gemini, Streamlit & Ken")
+st.caption("powered by Gemini & Ken")
 
 # --- 会話履歴とチャットセッションを初期化 ---
 if "chat" not in st.session_state:
     st.session_state.chat = model.start_chat(history=[])
     # 最初の挨拶は「投稿AI」から「ログインユーザー」へ
-    st.session_state.messages = [{"role": "assistant", "content": f"よっ、{LOGGED_IN_USER_NAME}！何でも聞いてくれよな！👍"}]
+    st.session_state.messages = [{"role": "assistant", "content": f"{LOGGED_IN_USER_NAME}、最近どう〜？"}]
 
 # --- タブのカテゴリをDBから取得 (変更なし) ---
 try:
@@ -100,7 +100,6 @@ for i, tab in enumerate(tabs):
         if category_id != 'general':
             # 将来的にはここで「このカテゴリの投稿者ID」をDBから取得する
             # CURRENT_KNOWLEDGE_CREATOR_ID = db_utils.get_creator_id_for_category(category_id)
-            # そして、その投稿者の人格でAI（トス）が答える
             st.subheader(f"「{CHAT_AI_NAME}」の「{category_name}」の型") # 今は全部 'Ken'
             
             try:
@@ -137,7 +136,7 @@ for i, tab in enumerate(tabs):
 
 # --- チャット履歴の表示 ---
 st.divider() 
-st.subheader(f"💬 {CHAT_AI_NAME}（AI）との会話") # AI人格の名前を表示
+st.subheader(f"💬 {CHAT_AI_NAME}") # AI人格の名前を表示
 
 chat_container = st.container(height=400) 
 with chat_container:
@@ -146,7 +145,7 @@ with chat_container:
             st.markdown(message["content"])
 
 # --- ユーザーからのチャット入力 ---
-if prompt := st.chat_input(f"{LOGGED_IN_USER_NAME}、メッセージを入力してくれ！"): # ログインユーザー名を表示
+if prompt := st.chat_input(f"{LOGGED_IN_USER_NAME}、なんでも話しかけてみてね^^"): # ログインユーザー名を表示
     st.session_state.messages.append({"role": "user", "content": prompt})
     with chat_container.chat_message("user"): 
         st.markdown(prompt)
