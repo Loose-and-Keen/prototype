@@ -148,7 +148,7 @@ for i, tab in enumerate(tabs):
 
 # --- チャット履歴の表示 ---
 st.divider() 
-st.subheader(f"💬 {CHAT_AI_NAME}") # AI人格の名前を表示
+#st.subheader(f"💬 {CHAT_AI_NAME}") # AI人格の名前を表示
 
 chat_container = st.container(height=400) 
 with chat_container:
