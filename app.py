@@ -107,7 +107,7 @@ for i, tab in enumerate(tabs):
                 preset_questions = db_utils.get_preset_questions(category_id)
                 
                 if not preset_questions:
-                    st.write("（このカテゴリの「型」はまだ準備中だぜ！）")
+                    st.write("（このカテゴリはまだ準備中〜）")
 
                 for question, knowledge_id in preset_questions:
                     if st.button(question, key=f"{category_id}_{knowledge_id}"):

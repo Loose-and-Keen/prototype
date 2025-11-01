@@ -17,7 +17,6 @@ CSV_KNOWLEDGE_DETAILS = os.path.join(BASE_DIR, 'data_knowledge_details.csv')
 
 def setup_database():
     """
-    
     DBファイルが存在しない場合（＝Streamlit Cloud起動時）に、
     CSVファイルからDBを爆速で自動構築する関数
     """
