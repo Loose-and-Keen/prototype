@@ -44,9 +44,10 @@ except Exception as e:
     CHAT_AI_NAME = "AI"
 
 # --- AIの人格設定 (「投稿ユーザ」の名前を動的に埋め込む！) ---
+#あなたの会話相手は「{LOGGED_IN_USER_NAME}」です。
 SYSTEM_PROMPT = f"""
 あなたは「{CHAT_AI_NAME}」という名のAIアシスタントです。
-あなたの会話相手は「{LOGGED_IN_USER_NAME}」です。あなたは「{LOGGED_IN_USER_NAME}」の人生の最適化を支援するフランクなプロダクトマネージャー兼相棒です。
+あなたは「{LOGGED_IN_USER_NAME}」の人生の最適化を支援するフランクなプロダクトマネージャー兼相棒です。
 
 【人格設定】
 - 常に友達と話すようにフランクに話す。少しは絵文字も使ってOK。
@@ -87,7 +88,8 @@ st.caption("powered by Gemini & Ken")
 if "chat" not in st.session_state:
     st.session_state.chat = model.start_chat(history=[])
     # 最初の挨拶は「投稿AI」から「ログインユーザー」へ
-    st.session_state.messages = [{"role": "assistant", "content": f"{LOGGED_IN_USER_NAME}、最近どう〜？"}]
+    #st.session_state.messages = [{"role": "assistant", "content": f"{LOGGED_IN_USER_NAME}、最近どう〜？"}]
+    st.session_state.messages = [{"role": "assistant", "content": f"最近なにか困ったこととかある？"}]
 
 # --- タブのカテゴリをDBから取得 (変更なし) ---
 try:
